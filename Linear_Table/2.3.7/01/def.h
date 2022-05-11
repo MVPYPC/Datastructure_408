@@ -7,12 +7,23 @@ typedef struct LNode{
     struct LNode *next;
 }LNode,*LinkList;
 
-void InitList(LinkList L, Elemtype Init[]){
+void InitList_withHead(LinkList L, Elemtype Init[]){
     LNode *cur = L;
     for(int i = 0; i < sizeof(Init) / sizeof(Elemtype); i++){
         LNode *p = (LNode*)malloc(sizeof(LNode));
         p->data = Init[i];
         cur->next = p;
+        cur = p;
+    }
+    cur = NULL;
+    return;
+}
+
+void InitList_withoutHead(LinkList L, Elemtype Init[]){
+    LNode *cur = L;
+    for(int i = 0; i < sizeof(Init) / sizeof(Elemtype); i++){
+        LNode *p = (LNode*)malloc(sizeof(LNode));
+        p->data = Init[i];
         cur = p;
     }
     cur = NULL;

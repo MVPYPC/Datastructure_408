@@ -14,7 +14,7 @@ void DelValue_x(LinkList L, Elemtype x){
 
 void main(){
     LinkList L = (LinkList)malloc(sizeof(LNode));
-    Elemtype test[5] = {1,2,3,4,5};
+    Elemtype test[5] = {1};
     InitList(L, test);
     DelValue_x(L, 3);
     printList(L);
