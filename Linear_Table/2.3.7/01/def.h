@@ -7,9 +7,9 @@ typedef struct LNode{
     struct LNode *next;
 }LNode,*LinkList;
 
-void InitList_withHead(LinkList L, Elemtype Init[]){
+void InitList_withHead(LinkList L, Elemtype Init[],int len){
     LNode *cur = L;
-    for(int i = 0; i < sizeof(Init) / sizeof(Elemtype); i++){
+    for(int i = 0; i < len; i++){
         LNode *p = (LNode*)malloc(sizeof(LNode));
         p->data = Init[i];
         cur->next = p;
@@ -19,14 +19,16 @@ void InitList_withHead(LinkList L, Elemtype Init[]){
     return;
 }
 
-void InitList_withoutHead(LinkList L, Elemtype Init[]){
-    LNode *cur = L;
-    for(int i = 0; i < sizeof(Init) / sizeof(Elemtype); i++){
-        LNode *p = (LNode*)malloc(sizeof(LNode));
-        p->data = Init[i];
-        cur = p;
+void InitList_withoutHead(LinkList L, Elemtype Init[],int len){
+    L = (LNode*)malloc(sizeof(LNode));
+    LNode *save = L;
+    for(int i = 0; i < len; i++){
+        L->data = Init[i];
+        L->next = (LNode*)malloc(sizeof(LNode));
+        L = L->next;
     }
-    cur = NULL;
+    L = NULL;
+    L = save;
     return;
 }
 

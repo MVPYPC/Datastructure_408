@@ -12,11 +12,11 @@ void DelValue_x(LinkList L, Elemtype x){
     return;
 }
 
-void main(){
+int main(){
     LinkList L = (LinkList)malloc(sizeof(LNode));
-    Elemtype test[5] = {1};
-    InitList(L, test);
+    Elemtype test[5] = {1,2,3,4,5};
+    InitList_withoutHead(L, test, sizeof(test) / sizeof(Elemtype));
     DelValue_x(L, 3);
     printList(L);
-    return;
+    return 0;
 }
