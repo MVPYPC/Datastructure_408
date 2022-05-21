@@ -19,21 +19,23 @@ void InitList_withHead(LinkList L, Elemtype Init[],int len){
     return;
 }
 
-void InitList_withoutHead(LinkList L, Elemtype Init[],int len){
-    L = (LNode*)malloc(sizeof(LNode));
+LinkList InitList_withoutHead(Elemtype Init[],int len){
+    LinkList L = (LNode*)malloc(sizeof(LNode));
     LNode *save = L;
     for(int i = 0; i < len; i++){
         L->data = Init[i];
-        L->next = (LNode*)malloc(sizeof(LNode));
-        L = L->next;
+        if(i == len - 1)
+            L->next = NULL;
+        else{
+            L->next = (LNode*)malloc(sizeof(LNode));
+            L = L->next;
+        }
     }
-    L = NULL;
-    L = save;
-    return;
+    return save;
 }
 
 void printList(LinkList L){
-    LNode* p = L->next;
+    LNode* p = L;
     while (p != NULL){
         printf("%d",p->data);
         p = p->next;
