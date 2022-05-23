@@ -16,7 +16,7 @@ LinkList InitList_withHead(Elemtype Init[],int len){
         cur->next = p;
         cur = p;
     }
-    cur = NULL;
+    cur->next = NULL;
     return head;
 }
 
