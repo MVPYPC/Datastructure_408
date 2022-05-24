@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <malloc.h>
 
+#define ERROR -1
+
 typedef int Elemtype;
 typedef struct LNode{
     Elemtype data;
@@ -55,4 +57,30 @@ void printList_withHead(LinkList L){
             printf("->");
     }
     return;
+}
+
+typedef struct stack{
+    Elemtype data;
+    struct stack* next;
+}StackNode,*Stack;
+
+Elemtype popStack(Stack& S){
+    if(S == NULL)
+        return ERROR;
+    Elemtype top = S->data;
+    S = S->next;
+    return top;
+}
+
+void pushStack(Stack& S,Elemtype x){
+    StackNode* in = (StackNode*)malloc(sizeof(StackNode));
+    in->data = x;
+    in->next = S;
+    S = in;
+}
+
+bool isEmpty(Stack S){
+    if(S == NULL)
+        return true;
+    else return false;
 }
