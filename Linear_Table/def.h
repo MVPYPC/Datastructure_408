@@ -1,7 +1,7 @@
 //#include "C:/Users/86072/Documents/Clanguage/Datastructure_408/Linear_Table/def.h"
 #include <stdio.h>
 #include <malloc.h>
-
+using namespace std;
 #define ERROR -1
 #define INT_MAX 2147483647
 
