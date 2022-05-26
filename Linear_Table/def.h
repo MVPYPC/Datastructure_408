@@ -1,7 +1,10 @@
 //#include "C:/Users/86072/Documents/Clanguage/Datastructure_408/Linear_Table/def.h"
 #include <stdio.h>
 #include <malloc.h>
+#include <math.h>
 using namespace std;
+
+
 #define ERROR -1
 #define INT_MAX 2147483647
 
@@ -67,6 +70,15 @@ void printList_withHead(LinkList L){
             printf("->");
     }
     return;
+}
+
+int ListLength_withHead(LinkList L){
+    if(L == NULL) 
+        return ERROR;
+    int len = 0;
+    for(LNode* cur = L->next; cur != NULL; cur = cur->next)
+        len++;
+    return len;
 }
 
 typedef struct stack{
