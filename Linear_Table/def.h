@@ -54,6 +54,7 @@ void printList_withoutHead(LinkList L){
         if(p != NULL)
             printf("->");
     }
+    printf("\n");
     return;
 }
 
@@ -69,6 +70,7 @@ void printList_withHead(LinkList L){
         if(p != NULL)
             printf("->");
     }
+    printf("\n");
     return;
 }
 
