@@ -40,6 +40,10 @@ LinkList InitList_withoutHead(Elemtype Init[],int len){
 }
 
 void printList_withoutHead(LinkList L){
+    if(L == NULL){
+        printf("Linklist is empty!\n");
+        return;
+    }
     LNode* p = L;
     while (p != NULL){
         printf("%d",p->data);
@@ -51,6 +55,10 @@ void printList_withoutHead(LinkList L){
 }
 
 void printList_withHead(LinkList L){
+    if(L == NULL || L->next == NULL){
+        printf("Linklist is empty!\n");
+        return;
+    }
     LNode* p = L->next;
     while (p != NULL){
         printf("%d",p->data);
