@@ -1,5 +1,5 @@
 #include "C:/Users/86072/Documents/Clanguage/Datastructure_408/Linear_Table/def.h"
-void divideList_into2List(LinkList L, LinkList& A, LinkList& B){
+void divideList_into2List_Brev(LinkList L, LinkList& A, LinkList& B){
     if(L == NULL || L->next == NULL){
         printf("EMPTY LIST!\n");
         return;
@@ -8,18 +8,22 @@ void divideList_into2List(LinkList L, LinkList& A, LinkList& B){
     A = (LinkList)malloc(sizeof(LinkList));//头结点
     LNode* pA = A;
     B = (LinkList)malloc(sizeof(LinkList));//头结点
-    LNode* pB = B;
-    for(int i = 0; p != NULL; p = p->next,i++)
+    LNode* pB = NULL;
+    LNode* save = NULL;
+    for(int i = 0; p != NULL; i++)
         switch (i % 2)
         {
         case 0:
             pA->next = p;
             pA = pA->next;
+            p = p->next;
             break;
         
         case 1:
-            pB->next = p;
-            pB = pB->next;
+            save = p->next;
+            p->next = pB;
+            pB = p;
+            p = save;
             break;
 
         default:
@@ -27,16 +31,16 @@ void divideList_into2List(LinkList L, LinkList& A, LinkList& B){
             return;
         }
     pA->next = NULL;
-    pB->next = NULL;
+    B->next = pB;
     return;
 }
 
 int main(void){
-    Elemtype test[5] = {5,4,1,2,3};
+    Elemtype test[10] = {5,4,1,2,3,0,10,9,8,7};
     LinkList L = InitList_withHead(test, sizeof(test) / sizeof(Elemtype));
     LinkList A;
     LinkList B;
-    divideList_into2List(L, A, B);
+    divideList_into2List_Brev(L, A, B);
     printList_withHead(A);
     printList_withHead(B);
     return 0;
