@@ -83,6 +83,15 @@ int ListLength_withHead(LinkList L){
     return len;
 }
 
+bool isNULL_withHead(LinkList L){
+    return L == NULL || L->next == NULL ? true : false;
+}
+
+bool isNULL_withoutHead(LinkList L){
+    return L == NULL ? true : false;
+}
+
+
 typedef struct stack{
     Elemtype data;
     struct stack* next;
