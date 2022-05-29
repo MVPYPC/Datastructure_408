@@ -2,11 +2,14 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <math.h>
+#include <string.h>
+#include <iostream>
 using namespace std;
 
 
 #define ERROR -1
 #define INT_MAX 2147483647
+#define BIG_NUM 100
 
 typedef int Elemtype;
 typedef struct LNode{
@@ -89,6 +92,30 @@ bool isNULL_withHead(LinkList L){
 
 bool isNULL_withoutHead(LinkList L){
     return L == NULL ? true : false;
+}
+
+char* list2string_withHead(LinkList L, int len){
+    if(isNULL_withHead(L))
+        return NULL;
+    char* str = (char*)malloc(sizeof(char) * len);
+    LNode* p = L->next;
+    for(int i = 0; p != NULL && i < len; p = p->next, i++){
+        *(str + i) = p->data + '0';
+        *(str + i + 1) = '\0';
+    }
+    return str;
+}
+
+char* list2string_withoutHead(LinkList L, int len){
+    if(isNULL_withoutHead(L))
+        return NULL;
+    char* str = (char*)malloc(sizeof(char) * len);
+    LNode* p = L;
+    for(int i = 0; p != NULL && i < len; p = p->next, i++){
+        *(str + i) = p->data + '0';
+        *(str + i + 1) = '\0';
+    }
+    return str;
 }
 
 
