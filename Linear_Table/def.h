@@ -11,6 +11,9 @@ using namespace std;
 #define INT_MAX 2147483647
 #define BIG_NUM 100
 
+/**********************************
+ * 单链表结构定义及常用相关函数
+ **********************************/
 typedef int Elemtype;
 typedef struct LNode{
     Elemtype data;
@@ -118,7 +121,58 @@ char* list2string_withoutHead(LinkList L, int len){
     return str;
 }
 
+/*****************************************
+ * 双链表及相关函数
+ * **************************/
+typedef struct DNode{
+    Elemtype data;
+    struct DNode* prior,*next;
+}DNode,*DLinkList;
 
+DLinkList InitDList_withHead_circulation(Elemtype Init[],int len){
+    DNode *head = (DNode*)malloc(sizeof(DNode));
+    DNode *cur = head;
+    for(int i = 0; i < len; i++){
+        DNode *p = (DNode*)malloc(sizeof(DNode));
+        p->data = Init[i];
+        cur->next = p;
+        p->prior = cur;
+        cur = p;
+    }
+    cur->next = head;
+    head->prior = cur;
+    return head;
+}
+
+void printDList_withHead(DLinkList L){
+    if(L == NULL || L->next == NULL){
+        printf("DLinklist is empty!\n");
+        return;
+    }
+    DNode* p = L->next;
+    while (p != L){
+        printf("%d",p->data);
+        p = p->next;
+        if(p != L)
+            printf(" <-> ");
+    }
+    printf("\n");
+    return;
+}
+
+bool isEmpty_withHead(DLinkList DL){
+    return DL == NULL || DL->next == DL || DL->prior == DL;
+}
+
+
+
+
+
+
+
+/***********************************
+ * 栈定义及常用函数
+ * ***********************************/
 typedef struct stack{
     Elemtype data;
     struct stack* next;
