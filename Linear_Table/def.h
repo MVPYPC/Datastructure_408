@@ -8,13 +8,41 @@ using namespace std;
 
 
 #define ERROR -1
+#define MAX_SIZE 50
 #define INT_MAX 2147483647
 #define BIG_NUM 100
+
+typedef int Elemtype;
+
+
+/***********************************
+ * 顺序表结构定义及常用函数
+ * *************************************/
+typedef struct {
+    Elemtype data[MAX_SIZE];
+    int length;
+}SqList;
+
+void initSqList(SqList& L, Elemtype init[], int len){
+    for(int i = 0; i < len; i++)
+        L.data[i] = init[i];
+    L.length = len;
+    return;
+}
+
+void printSqList(SqList L){
+    cout<<"**************"<<endl;
+    for(int i = 0; i < L.length; i++)
+        cout<<"data: "<<L.data[i]<<endl;
+    cout<<"length:"<<L.length<<endl;
+    cout<<"**************"<<endl;
+}
+
+
 
 /**********************************
  * 单链表结构定义及常用相关函数
  **********************************/
-typedef int Elemtype;
 typedef struct LNode{
     Elemtype data;
     struct LNode *next;
