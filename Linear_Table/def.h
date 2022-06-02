@@ -76,6 +76,19 @@ LinkList InitList_withoutHead(Elemtype Init[],int len){
     return save;
 }
 
+LinkList InitCycleList_withHead(Elemtype Init[], int len){
+    LNode *head = (LNode*)malloc(sizeof(LNode));
+    LNode *cur = head;
+    for(int i = 0; i < len; i++){
+        LNode *p = (LNode*)malloc(sizeof(LNode));
+        p->data = Init[i];
+        cur->next = p;
+        cur = p;
+    }
+    cur->next = head;
+    return head;
+}
+
 void printList_withoutHead(LinkList L){
     if(L == NULL){
         printf("Linklist is empty!\n");
@@ -102,6 +115,22 @@ void printList_withHead(LinkList L){
         printf("%d",p->data);
         p = p->next;
         if(p != NULL)
+            printf("->");
+    }
+    printf("\n");
+    return;
+}
+
+void printCycleList_withHead(LinkList L){
+    if(L == NULL || L->next == NULL){
+        printf("Linklist is empty!\n");
+        return;
+    }
+    LNode* p = L->next;
+    while (p != L){
+        printf("%d",p->data);
+        p = p->next;
+        if(p != L)
             printf("->");
     }
     printf("\n");
