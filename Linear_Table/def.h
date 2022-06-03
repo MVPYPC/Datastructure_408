@@ -54,6 +54,10 @@ typedef struct LNode{
     struct LNode *next;
 }LNode,*LinkList;
 
+typedef struct StrNode{
+    char c;
+    struct StrNode *next;
+}StrNode, *String;
 
 LinkList InitList_withHead(Elemtype Init[],int len){
     LNode *head = (LNode*)malloc(sizeof(LNode));
@@ -96,6 +100,19 @@ LinkList InitCycleList_withHead(Elemtype Init[], int len){
     return head;
 }
 
+String InitString(char Init[], int len){
+    StrNode *head = (StrNode*)malloc(sizeof(StrNode));
+    StrNode *cur = head;
+    for(int i = 0; i < len; i++){
+        StrNode *p = (StrNode*)malloc(sizeof(StrNode));
+        p->c = Init[i];
+        cur->next = p;
+        cur = p;
+    }
+    cur->next = NULL;
+    return head;
+}
+
 void printList_withoutHead(LinkList L){
     if(L == NULL){
         printf("Linklist is empty!\n");
@@ -128,6 +145,20 @@ void printList_withHead(LinkList L){
     return;
 }
 
+void printString_withoutHead(String s){
+    if(s == NULL || s->next == NULL){
+        printf("Linklist is empty!\n");
+        return;
+    }
+    StrNode* p = s;
+    while (p != NULL){
+        printf("%c",p->c);
+        p = p->next;
+    }
+    printf("\n");
+    return;
+}
+
 void printCycleList_withHead(LinkList L){
     if(L == NULL || L->next == NULL){
         printf("Linklist is empty!\n");
@@ -149,6 +180,15 @@ int ListLength_withHead(LinkList L){
         return ERROR;
     int len = 0;
     for(LNode* cur = L->next; cur != NULL; cur = cur->next)
+        len++;
+    return len;
+}
+
+int StringLength_withHead(String s){
+    if(s == NULL) 
+        return ERROR;
+    int len = 0;
+    for(StrNode* cur = s->next; cur != NULL; cur = cur->next)
         len++;
     return len;
 }
