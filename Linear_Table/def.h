@@ -38,7 +38,13 @@ void printSqList(SqList L){
     cout<<"**************"<<endl;
 }
 
-
+void printBool(bool i){
+    if(i)
+        cout<<"true"<<endl;
+    else 
+        cout<<"false"<<endl;
+    return;
+}
 
 /**********************************
  * 单链表结构定义及常用相关函数
