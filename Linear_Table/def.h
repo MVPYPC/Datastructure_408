@@ -48,6 +48,7 @@ typedef struct LNode{
     struct LNode *next;
 }LNode,*LinkList;
 
+
 LinkList InitList_withHead(Elemtype Init[],int len){
     LNode *head = (LNode*)malloc(sizeof(LNode));
     LNode *cur = head;
@@ -186,6 +187,13 @@ typedef struct DNode{
     struct DNode* prior,*next;
 }DNode,*DLinkList;
 
+typedef struct speXDnode{
+    struct speXDnode* pred;
+    Elemtype data;
+    int freq;
+    struct speXDnode* next;
+}speXDnode, *speXDLinkList;
+
 DLinkList InitDList_withHead_circulation(Elemtype Init[],int len){
     DNode *head = (DNode*)malloc(sizeof(DNode));
     DNode *cur = head;
@@ -219,6 +227,36 @@ void printDList_withHead(DLinkList L){
 
 bool isEmpty_withHead(DLinkList DL){
     return DL == NULL || DL->next == DL || DL->prior == DL;
+}
+
+speXDLinkList InitSpeXList_withHead(Elemtype Init[], int len){
+    speXDnode *head = (speXDnode*)malloc(sizeof(speXDnode));
+    speXDnode *cur = head;
+    for(int i = 0; i < len; i++){
+        speXDnode *p = (speXDnode*)malloc(sizeof(speXDnode));
+        p->data = Init[i];
+        cur->next = p;
+        p->pred = cur;
+        cur = p;
+        cur->freq = 0;
+    }
+    cur->next = NULL;
+    return head;
+}
+
+void printSpeXList_withHead(speXDLinkList sL){
+    if(sL == NULL || sL->next == NULL){
+        cout<<"EMPTY LIST!"<<endl;
+        return;
+    }
+    for(speXDnode* cur = sL->next; cur != NULL; cur = cur->next){
+        cout<<cur->data<<"("<<cur->freq<<")";
+        if(cur->next != NULL)
+            cout<<"<->";
+        else
+            cout<<endl;
+    }
+    return;
 }
 
 
