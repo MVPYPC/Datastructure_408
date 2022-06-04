@@ -312,7 +312,12 @@ void printSpeXList_withHead(speXDLinkList sL){
 typedef struct stack{
     Elemtype data;
     struct stack* next;
-}StackNode,*Stack;
+}StackNode,*Stack;//链式栈(int)
+
+typedef struct strstack{
+    char c;
+    struct strstack* next;
+}strStackNode,*strStack;//链式栈(char)
 
 Elemtype popStack(Stack& S){
     if(S == NULL)
@@ -330,6 +335,27 @@ void pushStack(Stack& S,Elemtype x){
 }
 
 bool isEmpty(Stack S){
+    if(S == NULL)
+        return true;
+    else return false;
+}
+
+char popstrStack(strStack& S){
+    if(S == NULL)
+        return ERROR;
+    char top = S->c;
+    S = S->next;
+    return top;
+}
+
+void pushstrStack(strStack& S,char c){
+    strStackNode* in = (strStackNode*)malloc(sizeof(strStackNode));
+    in->c= c;
+    in->next = S;
+    S = in;
+}
+
+bool isstrEmpty(strStack S){
     if(S == NULL)
         return true;
     else return false;
