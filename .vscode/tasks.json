@@ -11,7 +11,7 @@
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-I",
-                "C:/Users/86072/Documents/Clanguage/Datastructure_408/Linear_Table"
+                "C:/Users/86072/Documents/Clanguage/Datastructure_408"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -33,7 +33,7 @@
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-I",
-                "C:/Users/86072/Documents/Clanguage/Datastructure_408/Linear_Table"
+                "C:/Users/86072/Documents/Clanguage/Datastructure_408"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -55,7 +55,7 @@
                 "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "${file}",
                 "-I",
-                "C:/Users/86072/Documents/Clanguage/Datastructure_408/Linear_Table"
+                "C:/Users/86072/Documents/Clanguage/Datastructure_408"
             ],
             "options": {
                 "cwd": "${fileDirname}"
