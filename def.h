@@ -101,6 +101,7 @@ LinkList InitCycleList_withHead(Elemtype Init[], int len){
 }
 
 String InitString(char Init[], int len){
+    len--;
     StrNode *head = (StrNode*)malloc(sizeof(StrNode));
     StrNode *cur = head;
     for(int i = 0; i < len; i++){
