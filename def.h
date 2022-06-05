@@ -310,6 +310,16 @@ void printSpeXList_withHead(speXDLinkList sL){
 /***********************************
  * 栈定义及常用函数
  * ***********************************/
+typedef struct Sqstack{
+    Elemtype data[MAX_SIZE];
+    int top;
+}SqStack;//顺序栈
+
+typedef struct SqDstack{
+    Elemtype data[2 * MAX_SIZE];
+    int top[2];
+}SqDstack;//双向栈
+
 typedef struct stack{
     Elemtype data;
     struct stack* next;
@@ -360,4 +370,77 @@ bool isstrEmpty(strStack S){
     if(S == NULL)
         return true;
     else return false;
+}
+
+void InitSqDstack(SqDstack& Dstack){
+    Dstack.top[0] = -1;
+    Dstack.top[1] = 2 * MAX_SIZE;
+    return;
+}
+
+bool pushSqDstack(SqDstack& Dstack, int num, Elemtype x){
+    if(Dstack.top[0] + 1 == Dstack.top[1]){
+        cout<<"STACK OVERFLOW!!!"<<endl;
+        return false;
+    }
+    switch (num)
+    {
+    case 0:
+        Dstack.data[++Dstack.top[0]] = x;
+        break;
+
+    case 1:
+        Dstack.data[--Dstack.top[1]] = x;
+        break;
+    
+    default:
+        cout<<"ERROR STACK NUMBER"<<endl;
+        return false;
+    }
+    return true;
+}
+
+Elemtype popDstack(SqDstack& Dstack, int num){
+    switch (num)
+    {
+    case 0:
+        if(Dstack.top[0] == -1){
+            cout<<"STACK1 IS EMPTY!"<<endl;
+            return ERROR;
+        }
+        else
+            return Dstack.data[Dstack.top[0]--];
+        
+    case 1:
+        if(Dstack.top[1] == 2*MAX_SIZE){
+            cout<<"STACK2 IS EMPTY!"<<endl;
+            return ERROR;
+        }
+        else
+            return Dstack.data[Dstack.top[1]++];
+
+
+    default:
+        cout<<"ERROR STACK NUMBER"<<endl;
+        return ERROR;
+    }
+}
+
+void printDstack(SqDstack Dstack){
+    cout<<endl;
+    cout<<"*****STACK 1*****"<<endl;
+    if(Dstack.top[0] == -1)
+        cout<<"******EMPTY******"<<endl;
+    else
+        for(int i = Dstack.top[0]; i > -1; i--)
+            cout<<"*       "<<Dstack.data[i]<<"       *"<<endl;
+    cout<<"*****BOTTOM1*****"<<endl;
+    cout<<endl;
+    cout<<"*****STACK 2*****"<<endl;
+    if(Dstack.top[1] == 2 * MAX_SIZE)
+        cout<<"******EMPTY******"<<endl;
+    else
+        for(int i = Dstack.top[1]; i < 2 * MAX_SIZE; i++)
+            cout<<"*       "<<Dstack.data[i]<<"       *"<<endl;
+    cout<<"*****BOTTOM2*****"<<endl;
 }
