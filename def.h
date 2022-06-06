@@ -444,3 +444,48 @@ void printDstack(SqDstack Dstack){
             cout<<"*       "<<Dstack.data[i]<<"       *"<<endl;
     cout<<"*****BOTTOM2*****"<<endl;
 }
+
+typedef struct {
+    Elemtype data[MAX_SIZE];
+    int front,rear;
+    bool tag;//用于3.2.5/01 tag值为 false (0) 时, (front == rear) ==> 空
+             //             tag值为 true (1) 时, (front == rear) ==> 满
+}SqQueue_tag;
+
+void InitSqQueue_tag(SqQueue_tag& Q){
+    Q.front = 0;
+    Q.rear = 0;
+    Q.tag = false;
+}
+
+bool EnQueue_tag(SqQueue_tag& Q, Elemtype x){
+    if(Q.tag && Q.front == Q.rear){
+        cout<<"FULL QUEUE!"<<endl;
+        return false;
+    }
+    Q.data[Q.rear] = x;
+    Q.rear = (Q.rear + 1) % MAX_SIZE;
+    Q.tag = true;
+    return true;
+}
+
+bool DeQueue_tag(SqQueue_tag& Q, Elemtype& x){
+    if(((Q.front == Q.rear) && (!Q.tag))){
+        cout<<"EMPTY QUEUE!"<<endl;
+        return false;
+    }
+    x = Q.data[Q.front];
+    Q.front = (Q.front + 1) % MAX_SIZE;
+    Q.tag = false;
+    cout<<"DeQueue_tag success! And "<<x<<" is out of Queue"<<endl;
+    return true;
+}
+
+void printQueue_tag(SqQueue_tag q){
+    cout<<"FRONT-> ";
+    if(q.front == q.rear && q.tag)
+        cout<<q.data[q.front]<<" ";
+    for(int i = q.front + 1; i != q.rear; i = (i + 1) % MAX_SIZE)
+        cout<<q.data[i]<<" ";
+    cout<<"<-REAR"<<endl;
+}
