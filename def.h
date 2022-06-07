@@ -489,3 +489,52 @@ void printQueue_tag(SqQueue_tag q){
         cout<<q.data[i]<<" ";
     cout<<"<-REAR"<<endl;
 }
+
+
+typedef struct {
+    Elemtype data[MAX_SIZE];
+    int front,rear;
+}SqQueue;
+
+void InitSqQueue(SqQueue& Q){
+    Q.front = 0;
+    Q.rear = 0;
+}
+
+void AssignQueue(SqQueue& q, Elemtype assign[], int len){
+    if(len > MAX_SIZE){
+        cout<<"The array for assign is too~~ long!"<<endl;
+        return;
+    }
+    for(; q.rear < len; q.rear++)
+        q.data[q.rear] =  assign[q.rear];
+    return;
+}
+
+bool EnQueue(SqQueue& Q, Elemtype x){
+    if(Q.front == (Q.rear + 1) % MAX_SIZE){
+        cout<<"FULL QUEUE!"<<endl;
+        return false;
+    }
+    Q.data[Q.rear] = x;
+    Q.rear = (Q.rear + 1) % MAX_SIZE;
+    return true;
+}
+
+bool DeQueue(SqQueue& Q, Elemtype& x){
+    if(Q.front == Q.rear){
+        cout<<"EMPTY QUEUE!"<<endl;
+        return false;
+    }
+    x = Q.data[Q.front];
+    Q.front = (Q.front + 1) % MAX_SIZE;
+    cout<<"DeQueue success! And "<<x<<" is out of Queue"<<endl;
+    return true;
+}
+
+void printQueue(SqQueue q){
+    cout<<"FRONT-> ";
+    for(int i = q.front; i != q.rear; i = (i + 1) % MAX_SIZE)
+        cout<<q.data[i]<<" ";
+    cout<<"<-REAR"<<endl;
+}
