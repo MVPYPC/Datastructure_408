@@ -345,10 +345,33 @@ void pushStack(Stack& S,Elemtype x){
     S = in;
 }
 
+
 bool isEmpty(Stack S){
-    if(S == NULL)
-        return true;
-    else return false;
+    return S == NULL;
+}
+
+bool isOverflow(Stack S){
+    if(isEmpty(S))
+        return false;
+    bool res = false;
+    for(int i = 0; i < MAX_SIZE; i++)
+        if(S->next != NULL)
+            S = S->next;
+        else{
+            if(i == MAX_SIZE)
+                res = true;
+            break;
+        }
+    return res;
+}
+
+
+void printStack(Stack s){
+    cout<<endl<<"*****STACK 1*****"<<endl;
+    while(!isEmpty(s))
+        cout<<"*       "<<popStack(s)<<"       *"<<endl;
+    cout<<"****BOTTOM 1*****"<<endl;
+    return;
 }
 
 char popstrStack(strStack& S){
