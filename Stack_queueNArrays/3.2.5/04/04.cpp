@@ -14,7 +14,7 @@ void Init_speQueue(speQueue& sq){
 
 bool EnspeQueue(speQueue& sq, Elemtype e){
     if(sq.rear->next == sq.front){
-        cout<<"The queue is full, increase the space occupied by the queue."<<endl;
+        cout<<"The queue is full, increase the space occupied by the queue to get "<<e<<" in."<<endl;
         LNode* ins = (LNode*)malloc(sizeof(LNode));
         ins->next = sq.front;
         sq.rear->next = ins;
