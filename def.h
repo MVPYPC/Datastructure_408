@@ -517,7 +517,7 @@ void printQueue_tag(SqQueue_tag q){
 typedef struct {
     Elemtype data[MAX_SIZE];
     int front,rear;
-}SqQueue;
+}SqQueue;//顺序队列
 
 void InitSqQueue(SqQueue& Q){
     Q.front = 0;
@@ -561,3 +561,50 @@ void printQueue(SqQueue q){
         cout<<q.data[i]<<" ";
     cout<<"<-REAR"<<endl;
 }
+
+typedef struct Queue{
+    LNode* front;
+    LNode* rear;
+}Queue;//链队列
+
+void Init_Queue(Queue& q){
+    q.front = (LNode*)malloc(sizeof(LNode));
+    q.rear = q.front;
+    q.rear->next = q.front;
+    q.front->next =q.rear;
+}
+
+bool EnQueue(Queue& q, Elemtype e){
+    if(q.rear->next == q.front){
+        LNode* ins = (LNode*)malloc(sizeof(LNode));
+        ins->next = q.front;
+        q.rear->next = ins;
+    }
+    q.rear->data = e;
+    q.rear = q.rear->next;
+    return true;
+}
+
+bool DeQueue(Queue& q, Elemtype& e){
+    if(q.rear == q.front){
+        cout<<"EMPTY QUEUE!"<<endl;
+        return false;
+    }
+    e = q.front->data;
+    q.front =q.front->next;
+    return true;
+}
+
+bool isEmpty(Queue q){
+    return q.front == q.rear;
+}
+
+void print_Queue(Queue q){
+    cout<<"***************************************\n";
+    cout<<"Queue: ";
+    for(LNode* tmp = q.front; tmp != q.rear; tmp = tmp->next)
+        cout<<tmp->next->data<<" ";
+    cout<<endl<<"***************************************\n";
+    return;
+}
+
