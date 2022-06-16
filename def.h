@@ -695,3 +695,10 @@ void DestroyString(HString& T){
     T.length = -1;
     return;
 }
+
+typedef struct BiTNode{
+    Elemtype data;
+    struct BiTNode *left, *right;
+}BiTNode, *BiTree;
+
+                      
