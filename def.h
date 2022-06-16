@@ -608,3 +608,90 @@ void print_Queue(Queue q){
     return;
 }
 
+typedef struct {
+    char* ch;
+    int length;
+}HString;
+
+void StrAssign(HString& T, char* Init, int len){
+    int i = 0;
+    T.ch = (char*)malloc(sizeof(char) * (len - 1));//不要'\0'
+    while(Init[i] != '\0')
+        *(T.ch + i) = Init[i++];
+    T.length = i;
+    return;
+}
+
+void StrCopy(HString& T, HString S){
+    T.ch = (char*)malloc(sizeof(char) * S.length);
+    for(int i = 0; i < S.length; i++)
+        *(T.ch + i) = *(S.ch + i);
+    T.length = S.length;
+    return;
+}
+
+bool StrEmpty(HString T){
+    return T.length == 0 || T.ch == NULL;
+}
+
+int StrCompare(HString S, HString T){
+    for(int i = 0; i < min(S.length, T.length); i++){
+        int result = *(S.ch++) - *(T.ch++);
+        if(result != 0)
+            return result;
+    }
+    return 0;
+}
+
+int StrLength(HString T){
+    return T.length;
+}
+
+void SubString(HString& sub, HString T, int pos, int len){
+    if(pos + len >= T.length){
+        cout<<"ERROR PARAMETERS: pos + len ≥ T.length"<<endl;
+        return;
+    }
+    sub.ch = (char*)malloc(sizeof(char) * len);
+    sub.length = len;
+    for(int i = 0; i < len; i++)
+        *(sub.ch + i) = *(T.ch + pos + i);
+    return;
+}
+
+void Concat(HString& T, HString S1, HString S2){
+    T.ch = (char*)malloc((S1.length + S2.length) * sizeof(char));
+    T.length = S1.length + S2.length;
+    int t = 0;
+    for(int i = 0; i < S1.length; i++,t++)
+        *(T.ch + t) = *(S1.ch + i);
+    for(int i = 0; i < S2.length; i++,t++)
+        *(T.ch + t) = *(S2.ch + i);
+    return;
+}
+
+int Index(HString T, HString S){
+    int pos = 1;
+    for(; pos <= T.length - S.length; pos++){
+        int i = 1;
+        for(; i <= S.length; i++){
+            if(*(T.ch + pos + i) != *(S.ch + i))
+                break;
+        }
+        if(i == S.length + 1)
+            return pos + 1;
+    }
+    return 0;
+}
+
+void ClearString(HString& T){
+    T.ch = NULL;
+    T.length = 0;
+    return;
+}
+
+void DestroyString(HString& T){
+    free(T.ch);
+    T.length = -1;
+    return;
+}
