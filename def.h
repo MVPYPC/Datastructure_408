@@ -18,7 +18,7 @@ typedef int Elemtype;
 /***********************************
  * 顺序表结构定义及常用函数
  * *************************************/
-typedef struct {
+typedef struct SqList{
     Elemtype data[MAX_SIZE];
     int length;
 }SqList;
@@ -696,9 +696,14 @@ void DestroyString(HString& T){
     return;
 }
 
+typedef struct {
+    Elemtype data[MAX_SIZE];
+}SqTree;/*顺序存储二叉树，其中从数组下标1开始存储树中的结点，这样可以满足
+          性质：P131性质4)
+          data[0]可用于存储树中有效结点个数*/
+
 typedef struct BiTNode{
     Elemtype data;
     struct BiTNode *left, *right;
 }BiTNode, *BiTree;
 
-                      
