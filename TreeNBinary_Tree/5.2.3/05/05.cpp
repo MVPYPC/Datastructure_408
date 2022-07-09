@@ -19,6 +19,6 @@ int main(void){
     InitSqTree(T, test, sizeof(test) / sizeof(Elemtype));
     int i = 5;
     int j = 2;
-    cout<<"The nearest common Ancestor of i = "<<i<<", j = "<<j<<" is "<<find_Ancestor(T, i, j)<<endl;
+    cout<<"The Nearest Common Ancestor of i = "<<i<<", j = "<<j<<" is "<<find_Ancestor(T, i, j)<<endl;
     return 0;
 }
