@@ -23,6 +23,7 @@ typedef struct SqList{
     int length;
 }SqList;
 
+//Initializing the SqList L with the array init.
 void initSqList(SqList& L, Elemtype init[], int len){
     for(int i = 0; i < len; i++)
         L.data[i] = init[i];
@@ -699,8 +700,21 @@ void DestroyString(HString& T){
 typedef struct {
     Elemtype data[MAX_SIZE];
 }SqTree;/*顺序存储二叉树，其中从数组下标1开始存储树中的结点，这样可以满足
-          性质：P131性质4)
+          性质：P131性质4
           data[0]可用于存储树中有效结点个数*/
+
+void InitSqTree(SqTree &st, Elemtype init[], int len){
+    if(len > MAX_SIZE)
+        return;
+    st.data[0] = 0;
+    for(int i = 1; i <= len; i++){
+        st.data[i] = init[i - 1];
+        if(st.data[i] != 0)
+            st.data[0]++;
+    }
+    st.data[0]--;
+    return;
+}
 
 typedef struct BiTNode{
     Elemtype data;
