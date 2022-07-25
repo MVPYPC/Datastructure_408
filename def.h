@@ -4,15 +4,20 @@
 #include <math.h>
 #include <string.h>
 #include <iostream>
+#include <Windows.h>
 using namespace std;
 
 
-#define ERROR -1
+#define OK 1
+#define ERROR 0
+#define SUCCESS 1
+#define UNSUCCESS -1
 #define MAX_SIZE 50
 #define INT_MAX 2147483647
 #define BIG_NUM 100
 
 typedef int Elemtype;
+typedef int Status;
 
 
 /***********************************
@@ -330,6 +335,7 @@ typedef struct strstack{
     char c;
     struct strstack* next;
 }strStackNode,*strStack;//链式栈(char)
+
 
 Elemtype popStack(Stack& S){
     if(S == NULL)
@@ -721,3 +727,203 @@ typedef struct BiTNode{
     struct BiTNode *left, *right;
 }BiTNode, *BiTree;
 
+typedef struct Treestack{
+    BiTNode* node;
+    struct Treestack* next;
+}Tree_stacknode, *Tree_stack;
+
+BiTNode* pop_treeStack(Tree_stack& S){
+    if(S == NULL)
+        return NULL;
+    BiTNode* top = S->node;
+    S = S->next;
+    return top;
+}
+
+void push_treeStack(Tree_stack& S, BiTNode* x){
+    Tree_stacknode* in = (Tree_stacknode*)malloc(sizeof(Tree_stacknode));
+    in->node = x;
+    in->next = S;
+    S = in;
+}
+
+
+bool isEmpty(Tree_stack S){
+    if(S == NULL)
+        return true;
+    else
+        return false;
+}
+
+void visit(BiTNode* bnode){
+    cout<<bnode->data<<" ";
+    return;
+}
+
+void visit(Elemtype data){
+    cout<<data;
+    return;
+}
+
+void gotoxy(int x, int y)
+{
+	// 更新光标位置
+	COORD pos;
+	HANDLE hOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	pos.X = x;
+	pos.Y = y;
+	SetConsoleCursorPosition(hOutput, pos);
+}
+
+int BiTreeDepth(BiTree T) {
+	if (T == NULL) return 0;
+
+	int depthLeft, depthRight;
+	depthLeft = BiTreeDepth(T->left);
+	depthRight = BiTreeDepth(T->right);
+
+	return 1 + (depthLeft > depthRight ? depthLeft : depthRight);
+}
+
+Elemtype BreakBiTree(BiTree& T, BiTree& L, BiTree& R) {
+	if (T == NULL) return ERROR;
+	L = T->left;
+	R = T->right;
+	return OK;
+}
+/*
+* 递归打印打印出树形
+* T		正在打印的树
+* depth	目前在打印树的第几层
+* right	该子树是否为右子树
+* tap	目前子树需要的相对偏移数量
+*/
+Elemtype Traverse_R(BiTree T, int depth, int right, int tap) {
+	if (T == NULL) return OK;
+
+	// 获取一次树的初始高度，用于计算相对偏移数量
+	static int treeDepth = BiTreeDepth(T);
+	// 记录当前光标位置，用于在递归中记录当前递归时树的位置
+	int x, y;
+	// 拆分树，将树的左右子树拆分开来
+	BiTree L, R;
+	BreakBiTree(T, L, R);
+
+	// 计算父树的偏移量
+	int tap1 = tap * pow(2, treeDepth - depth);
+	// 计算子树的偏移量
+	int tap2 = right * (pow(2, treeDepth - depth));
+	// 计算半偏移量
+	int tap3 = pow(2, treeDepth - depth - 1);
+
+	// 获取根的坐标
+	// x 计算方法为：父偏移量 + 子偏移量 + 半偏移量 - 1
+	// y 计算方法为：目前打印的层数 * 2
+	x = tap1 + tap2 + tap3 - 1;
+	y = depth * 2;
+
+	// 打印根的位置
+	gotoxy(x * 2, y);
+	printf("%d", T->data);
+
+	// 在打印子树时，当前层数+1
+	depth++;
+	// 计算子树的父偏移量
+	tap = tap * 2 + (right == 1 ? 2 : 0);
+	if (L == NULL && R == NULL) return OK;
+	else if (R == NULL) {
+		// 打印左子树的位置
+		gotoxy(x * 2 - tap3, y + 1);
+		printf("┏");
+		for (int i = 0; i < tap3-1; i++) printf("━");
+		printf("┛");
+		Traverse_R(L, depth, 0, tap);
+	}
+	else if (L == NULL) {
+		// 打印右子树的位置
+		gotoxy(x * 2, y + 1);
+		printf("┗");
+		for (int i = 0; i < tap3-1; i++) printf("━");
+		printf("┓");
+		Traverse_R(R, depth, 1, tap);
+	}
+	else {
+		// 打印左右子树的位置
+		gotoxy(x * 2 - tap3, y + 1);
+		printf("┏");
+		for (int i = 0; i < tap3 - 1; i++) printf("━");
+		printf("┻");
+		for (int i = 0; i < tap3 - 1; i++) printf("━");
+		printf("┓");
+		Traverse_R(L, depth, 0, tap);
+		Traverse_R(R, depth, 1, tap);
+	}
+    return OK;
+}
+
+Elemtype PrinTree(BiTree T) {
+	Traverse_R(T, 0, 0, 0);
+	return OK;
+}
+
+BiTree CreateBiTree(Elemtype* a, int len,int* pi){
+	if (a[*pi] == '#'|| *pi>= len){//'#'是空结点标志
+		(*pi)++;
+		return NULL;
+	}
+	BiTNode* root = (BiTNode *) malloc(sizeof(BiTNode));
+	if (root == NULL){
+		printf("申请失败\n");
+		exit(-1);
+	}
+	root->data = a[(*pi)++];
+	root->left = CreateBiTree(a, len, pi);
+	root->right= CreateBiTree(a, len, pi);
+	return root;
+}
+
+void PreOrder_recursion(BiTree T){
+    if(T != NULL){
+        visit(T);
+        PreOrder_recursion(T->left);
+        PreOrder_recursion(T->right);
+    }
+    return;
+}
+
+void InOrder_recursion(BiTree T){
+    if(T != NULL){
+        InOrder_recursion(T->left);
+        visit(T);
+        InOrder_recursion(T->right);
+    }
+    return;
+}
+
+void PostOrder_recursion(BiTree T){
+    if(T != NULL){
+        PostOrder_recursion(T->left);
+        PostOrder_recursion(T->right);
+        visit(T);
+    }
+    return;
+}
+
+void PreOrder(BiTree T){
+    Tree_stack S = NULL;
+    BiTree cur = T;
+    while(cur || !isEmpty(S)){
+        if(cur){
+            visit(cur);
+            push_treeStack(S, cur);
+            cur = cur->left;
+        }else{
+            cur = pop_treeStack(S);
+            if(cur == NULL)
+                continue;
+            else
+                cur = cur->right;
+        }
+    }
+    return;
+}
