@@ -969,3 +969,60 @@ void PostOrder(BiTree T){
     }
     return;
 }
+
+typedef struct tree_QueueNode{
+    BiTNode* node;
+    struct tree_QueueNode* next;
+}tree_QueueNode;
+
+typedef struct tree_Queue{
+    tree_QueueNode* front;
+    tree_QueueNode* rear;
+}tree_Queue;//链队列
+
+void Init_Queue(tree_Queue& q){
+    q.front = (tree_QueueNode*)malloc(sizeof(tree_QueueNode));
+    q.rear = q.front;
+    q.rear->next = q.front;
+    q.front->next =q.rear;
+}
+
+bool EnQueue(tree_Queue& q, BiTNode* node){
+    if(q.rear->next == q.front){
+        tree_QueueNode* ins = (tree_QueueNode*)malloc(sizeof(tree_QueueNode));
+        ins->next = q.front;
+        q.rear->next = ins;
+    }
+    q.rear->node = node;
+    q.rear = q.rear->next;
+    return true;
+}
+
+bool DeQueue(tree_Queue& q, BiTNode*& node){
+    if(q.rear == q.front){
+        cout<<"EMPTY QUEUE!"<<endl;
+        return false;
+    }
+    node = q.front->node;
+    q.front =q.front->next;
+    return true;
+}
+
+bool isEmpty(tree_Queue q){
+    return q.front == q.rear;
+}
+
+void LevelOrder(BiTree T){
+    tree_Queue q;
+    Init_Queue(q);
+    BiTree cur = T;
+    EnQueue(q, cur);
+    while(!(isEmpty(q))){
+        DeQueue(q, cur);
+        visit(cur);
+        if(cur->left)
+            EnQueue(q, cur->left);
+        if(cur->right)
+            EnQueue(q, cur->right);
+    }
+}
