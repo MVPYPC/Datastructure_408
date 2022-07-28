@@ -6,8 +6,18 @@ int main(void){
     int *pi = &a;
     BiTree T = CreateBiTree(init, sizeof(init) / sizeof(int), pi);
     //PrinTree(T);
+    cout<<"PreOrder          :";
     PreOrder(T);
-    cout<<endl;
+    cout<<endl<<"PreOrder_recursion:";
     PreOrder_recursion(T);
+    cout<<endl<<"InOrder          :";
+    InOrder(T);
+    cout<<endl<<"InOrder_recursion:";
+    InOrder_recursion(T);
+    cout<<endl<<"PostOrder          :";
+    PostOrder(T);
+    cout<<endl<<"PostOrder_recursion:";
+    PostOrder_recursion(T);
+    cout<<endl;
     return 0;
 }

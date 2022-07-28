@@ -747,6 +747,10 @@ void push_treeStack(Tree_stack& S, BiTNode* x){
     S = in;
 }
 
+BiTNode* get_treeStack(Tree_stack S){
+    return S->node;
+}
+
 
 bool isEmpty(Tree_stack S){
     if(S == NULL)
@@ -765,7 +769,7 @@ void visit(Elemtype data){
     return;
 }
 
-void gotoxy(int x, int y)
+/* void gotoxy(int x, int y)
 {
 	// 更新光标位置
 	COORD pos;
@@ -798,7 +802,7 @@ Elemtype BreakBiTree(BiTree& T, BiTree& L, BiTree& R) {
 * right	该子树是否为右子树
 * tap	目前子树需要的相对偏移数量
 */
-Elemtype Traverse_R(BiTree T, int depth, int right, int tap) {
+/* Elemtype Traverse_R(BiTree T, int depth, int right, int tap) {
 	if (T == NULL) return OK;
 
 	// 获取一次树的初始高度，用于计算相对偏移数量
@@ -864,7 +868,7 @@ Elemtype Traverse_R(BiTree T, int depth, int right, int tap) {
 Elemtype PrinTree(BiTree T) {
 	Traverse_R(T, 0, 0, 0);
 	return OK;
-}
+} */
 
 BiTree CreateBiTree(Elemtype* a, int len,int* pi){
 	if (a[*pi] == '#'|| *pi>= len){//'#'是空结点标志
@@ -922,6 +926,44 @@ void PreOrder(BiTree T){
             if(cur == NULL)
                 continue;
             else
+                cur = cur->right;
+        }
+    }
+    return;
+}
+
+void InOrder(BiTree T){
+    Tree_stack S = NULL;
+    BiTree cur = T;
+    while(cur || !isEmpty(S)){
+        if(cur){
+            push_treeStack(S, cur);
+            cur = cur->left;
+        }else{
+            cur = pop_treeStack(S);
+            visit(cur);
+            cur = cur->right;
+        }
+    }
+    return;
+}
+
+void PostOrder(BiTree T){
+    Tree_stack S = NULL;
+    BiTree cur = T;
+    BiTree last = NULL;
+    while(cur || !isEmpty(S)){
+        if(cur){
+            push_treeStack(S, cur);
+            cur = cur->left;
+        }else{
+            cur = get_treeStack(S);
+            if(cur->right == NULL || cur->right == last){
+                visit(cur);
+                last = cur;
+                pop_treeStack(S);
+                cur = NULL;
+            }else 
                 cur = cur->right;
         }
     }
