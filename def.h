@@ -1008,6 +1008,13 @@ bool DeQueue(tree_Queue& q, BiTNode*& node){
     return true;
 }
 
+void seekRear(tree_Queue q, BiTNode*& rear){
+    for(tree_QueueNode* seek = q.front; seek != q.rear; seek = seek->next)
+        if(seek->next == q.rear)
+            rear = seek->node;
+    return;
+}
+
 bool isEmpty(tree_Queue q){
     return q.front == q.rear;
 }
@@ -1025,4 +1032,28 @@ void LevelOrder(BiTree T){
         if(cur->right)
             EnQueue(q, cur->right);
     }
+}
+
+int DepthTree(BiTree T){
+    if(T == NULL)
+        return 0;
+    int level = 0;
+    tree_Queue q;
+    Init_Queue(q);
+    BiTree cur = T;
+    EnQueue(q, cur);
+    BiTNode* last;
+    seekRear(q, last);
+    while(!isEmpty(q) || level  == 0){
+        DeQueue(q, cur);
+        if(cur->left)
+            EnQueue(q, cur->left);
+        if(cur->right)
+            EnQueue(q, cur->right);
+        if(cur == last){
+            level++;
+            seekRear(q, last);
+        }
+    }
+    return level;
 }
